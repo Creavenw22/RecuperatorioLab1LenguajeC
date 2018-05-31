@@ -15,6 +15,7 @@ typedef struct
     char NombreCompleto[100];
     char Direccion[100];
     char Tarjeta[100];
+    int Edad;
     int Estado;
 
 }EPersona;
@@ -70,6 +71,10 @@ typedef struct
 *   \return 1 Si hay Propietarios, 0 si no los hay.
 */ int listarPropietarios(EPersona Persona[],int valor);
 
+/** \brief Function: Lista un array de la estructura Persona.
+*   \param Request: Array de la estructura Persona.
+*   \return 1 Si hay Propietarios, 0 si no los hay.
+*/ int listarPropietariosMayores(EPersona Persona[],int valor);
 
 /** \brief Function: Lista un array de la estructura Auto.
 *   \param Request: Array de la estructura Auto.
@@ -186,7 +191,13 @@ typedef struct
  *  \param  Request: estructura Persona.
  *  \param  Request: el valor maximo de la estructura Persona.
  *  \return Returns: NULL.
- */ void ordenarNombre(EPersona persona[],int valor);
+ */ void ordenarNombreA(EPersona persona[],int valor);
+
+ /** \brief Ordena los nombres de A-Z.
+ *  \param  Request: estructura Persona.
+ *  \param  Request: el valor maximo de la estructura Persona.
+ *  \return Returns: NULL.
+ */ void ordenarNombreD(EPersona persona[],int valor);
 
 /** \brief Ordena las patentes de A-Z.
  *  \param  Request: estructura Auto.
@@ -201,7 +212,7 @@ typedef struct
  *  \param  Request: nombre auxiliar.
  *  \param  Request: indice libre de la estructura.
  *  \return Returns: NULL.
- */ void transferirEstructuraPersona(EPersona Persona[],char nombre[],char tarjeta[],char direccion[],int libre);
+ */ void transferirEstructuraPersona(EPersona Persona[],char nombre[],char tarjeta[],char direccion[],int edad, int libre);
 
 /** \brief Transfiere los valores auxiliares a la estructura Auto y le asigna un ID autoincremental.
  *  \param  Request: estructura Persona.
@@ -223,6 +234,21 @@ typedef struct
  *  \param  Request: indice libre de la estructura.
  *  \return Returns: NULL.
  */ void egresoAuto(EAuto Auto[],EPersona Persona[],EOutput Output[],int lugar,int tiempo,int libre);
+
+ int listarPropietariosAscendente(EPersona Persona[],int valor);
+
+ int listarPropietariosDescendente(EPersona Persona[],int valor);
+
+ /** \brief Transfiere los valores auxiliares a la estructura Output.
+ *  \param  Request: estructura Persona.
+ *  \param  Request: estructura Auto.
+ *  \param  Request: estructura Output.
+ *  \param  Request: lugar auxiliar.
+ *  \param  Request: tiempo auxiliar.
+ *  \param  Request: nombre auxiliar.
+ *  \param  Request: indice libre de la estructura.
+ *  \return Returns: NULL.
+ */  void egresoAutoSinLista(EAuto Auto[],EPersona Persona[],EOutput Output[],int lugar,int tiempo,int libre);
 
  /** \brief Menu para listar los elementos de los arrays de las estructuras.
  *  \param  Request: Array estructura Persona.
@@ -274,6 +300,7 @@ typedef struct
  *  \return Returns: Un numero entero.
  */ int devolverHorasEstadia(void);
 
+void ticketMasAlto(EPersona Persona[],EOutput Output[],int valor);
 
 
 #endif // FUNCIONES_H_INCLUDED

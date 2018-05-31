@@ -51,6 +51,49 @@ void inicializarOutput(EOutput Output[],int valor)
     }
 }
 
+int listarPropietariosMayores(EPersona Persona[],int valor)
+{
+    int flag=1;
+    int lenNombre;
+    int edad;
+    printf("Ingrese la edad minima de los socios que quiere listar: ");
+    scanf("%d",&edad);
+
+    system("cls");
+    printf("\n\n~ID~\t~Nombre~\t\t~Tarjeta de Credito~\t~Direccion~\t~Edad~\n\n");
+    for(int i=0; i<valor; i++)
+    {
+        if(Persona[i].Estado==1&&Persona[i].Edad>=edad)
+        {
+            lenNombre=strlen(Persona[i].NombreCompleto);
+
+            printf("%d\t%s\t",Persona[i].ID,Persona[i].NombreCompleto);
+
+            if(lenNombre<16)
+            {
+                printf("\t");
+            }
+
+            printf("%s\t%s\t%d\n",Persona[i].Tarjeta,Persona[i].Direccion,Persona[i].Edad);
+            flag=0;
+        }
+
+    }
+
+    if(flag)
+    {
+        system("cls");
+        return 0;
+    }
+
+    else
+    {
+        printf("\n");
+        return 1;
+    }
+
+}
+
 int listarPropietarios(EPersona Persona[],int valor)
 {
     int flag=1;
@@ -59,21 +102,105 @@ int listarPropietarios(EPersona Persona[],int valor)
 
 
     system("cls");
-    printf("\n\n~ID~\t~Nombre~\t\t\t~Tarjeta de Credito~\t\t~Direccion~\n\n");
+    printf("\n\n~ID~\t~Nombre~\t\t~Tarjeta de Credito~\t~Direccion~\t~Edad~\n\n");
     for(int i=0; i<valor; i++)
     {
         if(Persona[i].Estado==1)
         {
             lenNombre=strlen(Persona[i].NombreCompleto);
 
-            printf("%d\t%s\t\t",Persona[i].ID,Persona[i].NombreCompleto);
+            printf("%d\t%s\t",Persona[i].ID,Persona[i].NombreCompleto);
 
             if(lenNombre<16)
             {
                 printf("\t");
             }
 
-            printf("%s\t\t%s\n",Persona[i].Tarjeta,Persona[i].Direccion);
+            printf("%s\t%s\t%d\n",Persona[i].Tarjeta,Persona[i].Direccion,Persona[i].Edad);
+            flag=0;
+        }
+
+    }
+
+    if(flag)
+    {
+        system("cls");
+        return 0;
+    }
+
+    else
+    {
+        printf("\n");
+        return 1;
+    }
+
+}
+
+int listarPropietariosAscendente(EPersona Persona[],int valor)
+{
+    int flag=1;
+    int lenNombre;
+
+
+    ordenarNombreA(Persona,valor);
+    system("cls");
+    printf("\n\n~ID~\t~Nombre~\t\t~Tarjeta de Credito~\t~Direccion~\t~Edad~\n\n");
+    for(int i=0; i<valor; i++)
+    {
+        if(Persona[i].Estado==1)
+        {
+            lenNombre=strlen(Persona[i].NombreCompleto);
+
+            printf("%d\t%s\t",Persona[i].ID,Persona[i].NombreCompleto);
+
+            if(lenNombre<16)
+            {
+                printf("\t");
+            }
+
+            printf("%s\t%s\t%d\n",Persona[i].Tarjeta,Persona[i].Direccion,Persona[i].Edad);
+            flag=0;
+        }
+
+    }
+
+    if(flag)
+    {
+        system("cls");
+        return 0;
+    }
+
+    else
+    {
+        printf("\n");
+        return 1;
+    }
+
+}
+
+int listarPropietariosDescendente(EPersona Persona[],int valor)
+{
+    int flag=1;
+    int lenNombre;
+
+
+    ordenarNombreD(Persona,valor);
+    system("cls");
+    printf("\n\n~ID~\t~Nombre~\t\t~Tarjeta de Credito~\t~Direccion~\t~Edad~\n\n");
+    for(int i=0; i<valor; i++)
+    {
+        if(Persona[i].Estado==1)
+        {
+            lenNombre=strlen(Persona[i].NombreCompleto);
+
+            printf("%d\t%s\t",Persona[i].ID,Persona[i].NombreCompleto);
+
+            if(lenNombre<16)
+            {
+                printf("\t");
+            }
+
+            printf("%s\t%s\t%d\n",Persona[i].Tarjeta,Persona[i].Direccion,Persona[i].Edad);
             flag=0;
         }
 
@@ -282,7 +409,7 @@ int recaudacionTotal(EOutput Output[],EPersona Persona[],int valor,int out)
     int acumNeto=0;
 
     system("cls");
-    printf("\n~Lista de Autos egresados~\n\nEgreso n\tPatente\t\tMarca\t\tPropietario\t\tHoras/Monto\t\n\n");
+    printf("\n~Lista de Autos egresados~\n\nEgreso n\tPatente\tMarca\tPropietario\t\tHoras/Monto\t\n\n");
     for(int i=0; i<out; i++)
     {
         if(Output[i].Estado==1)
@@ -290,23 +417,23 @@ int recaudacionTotal(EOutput Output[],EPersona Persona[],int valor,int out)
             idPersona=buscarPorID(Persona,Output[i].Propietario,valor);
             lenNombre=strlen(Persona[idPersona].NombreCompleto);
             int idProp= ((Output[i].Propietario) - 1);
-            printf("%d\t\t%s",Output[i].Cont,Output[i].Patente);
+            printf("%d\t%s",Output[i].Cont,Output[i].Patente);
 
             if(Output[i].Marca==1)
             {
-                printf("\t\tAlpha Romeo\t");
+                printf("\tAlpha Romeo\t");
             }
             else if(Output[i].Marca==2)
             {
-                printf("\t\tFerrari\t\t");
+                printf("\tFerrari\t\t");
             }
             else if(Output[i].Marca==3)
             {
-                printf("\t\tAudi\t\t");
+                printf("\tAudi\t\t");
             }
             else
             {
-                printf("\t\tOtro\t\t");
+                printf("\tOtro\t\t");
             }
 
 
@@ -593,7 +720,7 @@ int getStringAlfaNumerico(char mensaje[],char input[])
     return 0;
 }
 
-void ordenarNombre(EPersona Persona[],int valor)
+void ordenarNombreA(EPersona Persona[],int valor)
 {
     EPersona auxiliarPersona;
     for(int i=0; i <valor-1; i++)
@@ -617,6 +744,34 @@ void ordenarNombre(EPersona Persona[],int valor)
             }
         }
     }
+printf("Se han ordenado los nombres con exito!");
+}
+
+void ordenarNombreD(EPersona Persona[],int valor)
+{
+    EPersona auxiliarPersona;
+    for(int i=0; i <valor-1; i++)
+    {
+        if(Persona[i].Estado == 0)
+        {
+            continue;
+        }
+        for(int j=i+1; j < valor; j++)
+        {
+            if(Persona[j].Estado == 0)
+            {
+                continue;
+            }
+            if(strcmp(Persona[i].NombreCompleto,Persona[j].NombreCompleto) < 0)
+            {
+                auxiliarPersona = Persona[j];
+                Persona[j] = Persona[i];
+                Persona[i] = auxiliarPersona;
+                //
+            }
+        }
+    }
+    printf("Se han ordenado los nombres con exito!");
 
 }
 
@@ -647,7 +802,7 @@ void ordenarPatente(EAuto Auto[],int valor)
 
 }
 
-void transferirEstructuraPersona(EPersona Persona[],char nombre[],char tarjeta[],char direccion[],int libre)
+void transferirEstructuraPersona(EPersona Persona[],char nombre[],char tarjeta[],char direccion[],int edad, int libre)
 {
 
     strlwr(nombre);
@@ -664,12 +819,14 @@ void transferirEstructuraPersona(EPersona Persona[],char nombre[],char tarjeta[]
     strcpy(Persona[libre].Tarjeta,tarjeta);
     strcpy(Persona[libre].NombreCompleto,nombre);
     strcpy(Persona[libre].Direccion,direccion);
+    Persona[libre].Edad=edad;
     Persona[libre].Estado=1;
     system("cls");
     printf("\n\nID: %d\n",Persona[libre].ID);
     printf("\n\nNombre: %s\n",Persona[libre].NombreCompleto);
     printf("\n\nTarjeta de credito: %s\n",Persona[libre].Tarjeta);
     printf("\n\nDireccion: %s\n\n\n",Persona[libre].Direccion);
+    printf("\n\nEdad: %d\n\n\n",Persona[libre].Edad);
     system("pause");
     system("cls");
 
@@ -787,6 +944,39 @@ void egresoAuto(EAuto Auto[],EPersona Persona[],EOutput Output[],int lugar,int t
     system("pause");
 }
 
+void egresoAutoSinLista(EAuto Auto[],EPersona Persona[],EOutput Output[],int lugar,int tiempo,int libre)
+{
+
+    int lugarIndice=lugar-1;
+    int monto;
+
+
+    if(Auto[lugarIndice].Marca==1)
+    {
+        monto = tiempo*150;
+    }
+    else if(Auto[lugarIndice].Marca==2)
+    {
+        monto = tiempo*175;
+    }
+    else if(Auto[lugarIndice].Marca==3)
+    {
+        monto = tiempo*200;
+    }
+    else
+    {
+        monto = tiempo*250;
+    }
+
+    strcpy(Output[libre].Patente,Auto[lugarIndice].Patente);
+    Output[libre].Marca=Auto[lugarIndice].Marca;
+    Output[libre].Tiempo=tiempo;
+    Output[libre].Monto=monto;
+    Output[libre].Propietario=Auto[lugarIndice].Propietario;
+    Output[libre].Estado=0;
+    Output[libre].Cont=libre+1;
+    Auto[lugarIndice].Estado=0;
+}
 
 void listas(EPersona Persona[], EAuto Auto[], int valor)
 {
@@ -799,6 +989,9 @@ void listas(EPersona Persona[], EAuto Auto[], int valor)
     printf("~2-Lista de Autos x ingreso~\n");
     printf("~3-Lista de Autos x patente~\n");
     printf("~4-Socios propietarios de audis~\n");
+    printf("~5-Lista de propietarios A-Z~\n");
+    printf("~6-Lista de propietarios Z-A~\n");
+    printf("~7-Listar propietarios mayores de una edad~\n");
     scanf("%d",&opcion);
 
     switch(opcion)
@@ -836,6 +1029,27 @@ void listas(EPersona Persona[], EAuto Auto[], int valor)
             system("pause");
         }
         break;
+    case 5:
+        if(!listarPropietariosAscendente(Persona,valor))
+        {
+            printf("\n\n\n\t\t\t\t\t~No hay propietarios~\n\t\t\t\t\tSera redirijido al menu principal.\n\n\n\n");
+            system("pause");
+        }
+        break;
+    case 6:
+        if(!listarPropietariosDescendente(Persona,valor))
+        {
+            printf("\n\n\n\t\t\t\t\t~No hay propietarios~\n\t\t\t\t\tSera redirijido al menu principal.\n\n\n\n");
+            system("pause");
+        }
+        break;
+    case 7:
+        if(!listarPropietariosMayores(Persona,valor))
+        {
+            printf("\n\n\n\t\t\t\t\t~No hay propietarios~\n\t\t\t\t\tSera redirijido al menu principal.\n\n\n\n");
+            system("pause");
+        }
+        break;
     default:
 
         system("cls");
@@ -856,7 +1070,8 @@ void recaudaciones(EPersona Persona[], EAuto Auto[],EOutput Output[],int valor,i
 
     printf("\n~Menu Recaudaciones: ~\n\n");
     printf("~1-Recaudacion total del estacionamiento~\n");
-    printf("~2-Recaudacion total por marca~\n\nIngrese opcion: ");
+    printf("~2-Recaudacion total por marca~\n");
+    printf("~3-Ticket mas alto~\n\nIngrese opcion: ");
     scanf("%d",&opcion);
 
     switch(opcion)
@@ -878,7 +1093,9 @@ void recaudaciones(EPersona Persona[], EAuto Auto[],EOutput Output[],int valor,i
 
         }
         break;
-
+    case 3:
+        ticketMasAlto(Persona,Output,out);
+        break;
     default:
 
         system("cls");
@@ -980,8 +1197,9 @@ void hardCodeProp(EPersona Persona[])
 {
     int id[5]= {1,2,3,4,5};
     char nombre[][50]= {"Francisco Bustamante","Macarena Romero","Ramiro Garcia","Francisco Olive","Paula Rhul"};
-    char direccion[][50]= {"San Juan 1","Pio XII 858","Rio cuarto 25","Atalaya 666","Mi tio mario 123"};
+    char direccion[][50]= {"San Juan 1","Pio XII 858","Rio cuarto 25","Atalaya 666","Tio Mario 123"};
     char tarjeta[][50]= {"1234 1234 1234 1234","4567 4567 4567 4567","7894 7894 7894 7894","4561 4561 4561 4561","3214 3214 3214 3214"};
+    int edad[5]={21,23,40,60,33};
 
     for(int i=0; i<5; i++)
     {
@@ -989,6 +1207,7 @@ void hardCodeProp(EPersona Persona[])
         strcpy(Persona[i].NombreCompleto,nombre[i]);
         strcpy(Persona[i].Direccion,direccion[i]);
         strcpy(Persona[i].Tarjeta,tarjeta[i]);
+        Persona[i].Edad=edad[i];
         Persona[i].Estado=1;
     }
 
@@ -1070,7 +1289,57 @@ int devolverHorasEstadia()
 }
 
 
+void ticketMasAlto(EPersona Persona[],EOutput Output[],int valor)
+{
+    int mayor=0;
+    int idMayorP;
+    int idMayorO;
+    int id;
 
+    for(int i=0;i<valor;i++)
+    {
+        if(Output[i].Monto>mayor)
+        {
+            mayor=Output[i].Monto;
+            idMayorP=Output[i].Propietario;
+            idMayorO=Output[i].Cont;
+        }
+    }
+    id=buscarPorID(Persona,idMayorP,20);
+    system("cls");
+    printf("Datos de la persona: \n\n");
+    printf("ID: %d\n",Persona[id].ID);
+    printf("Propietario: %s\n",Persona[id].NombreCompleto);
+    printf("Tarjeta de credito: %s\n",Persona[id].Tarjeta);
+    printf("Direccion: %s\n",Persona[id].Direccion);
+    printf("Edad: %d\n\n",Persona[id].Edad);
+    printf("Datos del auto: \n\n");
+    printf("Patente: %s\n",Output[idMayorO-1].Patente);
+
+    if(Output[idMayorO-1].Marca==1)
+            {
+                printf("Marca: Alpha Romeo\n");
+            }
+    else if(Output[idMayorO-1].Marca==2)
+            {
+                printf("Marca: Ferrari\n");
+            }
+            else if(Output[idMayorO].Marca==3)
+            {
+                printf("Marca: Audi\n");
+            }
+            else
+            {
+                printf("Marca: Otro\n");
+            }
+
+    printf("Estadia: %dhs\n",Output[idMayorO-1].Tiempo);
+    printf("Monto: $%d\n",Output[idMayorO-1].Monto);
+
+
+
+
+}
 
 
 

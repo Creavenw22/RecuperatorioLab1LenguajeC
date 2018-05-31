@@ -4,6 +4,7 @@
 
 int main()
 {
+    system("color 1F");
     //CREO E INICIO LAS ESTRUCTURAS CORRESPONDIENTES
     EPersona Persona[ESP];
     inicializarPropietarios(Persona,ESP);
@@ -24,6 +25,9 @@ int main()
     int auxID,i;
     int flag=0;
     char confirm='n';
+
+    int montoBaja;
+    int montoTotal=0;
 
     //AUXILIARES DE PROPIETARIOS
     char auxTarjetaAr[100],auxNombreAr[100],auxDireccionAr[100];
@@ -58,7 +62,7 @@ int main()
             }
 
             //VALIDA QUE NO HAYA LETRAS EN LA TARJETA
-            if(!getStringNumeros("\n\nIngrese Tarjeta de Credito: \n\n",auxTarjetaAr))
+            if(!getStringNumeros("\n\nIngrese Tarjeta de Credito (xxxx xxxx xxxx xxxx): \n\n",auxTarjetaAr))
             {
                 printf("\n\n\n\t\t\t\t\t~La tarjeta de credito debe tener solo numeros~\n\n\n\n");
                 system("pause");
@@ -72,9 +76,12 @@ int main()
                 system("pause");
                 break;
             }
+            int auxEdad;
+            printf("\n\nIngrese la edad del socio: \n\n");
+            scanf("%d",&auxEdad);
 
             //TRANSFIERE LOS DATOS AUXILIARES AL ARRAY DE LA ESTRUCTURA ORIGINAL
-            transferirEstructuraPersona(Persona,auxNombreAr,auxTarjetaAr,auxDireccionAr,libre);
+            transferirEstructuraPersona(Persona,auxNombreAr,auxTarjetaAr,auxDireccionAr,auxEdad,libre);
 
             break;
         case 2:
@@ -128,6 +135,7 @@ int main()
             break;
 
         case 3:
+
             if(!listarPropietarios(Persona,ESP))
             {
                 printf("\n\n\n\t\t\t\t\t~No hay propietarios modificables~\n\t\t\t\t\tSera redirijido al menu principal.\n\n\n\n");
@@ -152,8 +160,6 @@ int main()
             *Y EL MONTO
             *DE ESTADIA
             */
-            printf("Los autos que se daran de baja son los siguientes: \n\n\n");
-            system("pause");
             auxTiempo=devolverHorasEstadia();
 
             for(int j=0; j<ESP; j++)
@@ -167,11 +173,26 @@ int main()
                         system("pause");
                         break;
                     }
-                    egresoAuto(Auto,Persona,Output,j+1,auxTiempo,libre);
+                    egresoAutoSinLista(Auto,Persona,Output,j+1,auxTiempo,libre);
+
+
                 }
             }
 
-            printf("\n\n\n\nEsta seguro que desea dar de baja este usuario y terminar sus estadias (Debera abonar los egresos)? S/N\n");
+            for(int k=0;k<ESP;k++)
+            {
+                if(Output[k].Propietario==Persona[i].ID&&Output[k].Estado==0)
+                {
+                    montoBaja=Output[k].Monto;
+                    montoTotal=montoTotal+montoBaja;
+                    Output[k].Estado=1;
+                }
+
+            }
+
+
+
+            printf("\n\n\n\nEsta seguro que desea dar de baja este usuario y terminar sus estadias (Debera abonar: $%d)? S/N\n",montoTotal);
             confirm=getche();
             printf("\n\n");
             system("pause");
